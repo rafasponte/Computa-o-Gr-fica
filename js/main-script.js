@@ -338,7 +338,7 @@ function update() {
 /////////////
 function render() {
     if (renderer.xr.isPresenting) {
-        renderer.render(scene, camera);
+        renderer.render(scene, renderer.xr.getCamera());
     } else if (useFixedCamera) {
         stereoCamera.eyeSep = 0.064;
         stereoCamera.update(camera);
