@@ -341,7 +341,12 @@ function update() {
 /////////////
 function render() {
     if (renderer.xr.isPresenting) {
-        renderer.render(scene, camera);
+        
+        const vrCamera = renderer.xr.getCamera();
+        vrCamera.position.set(0, 5, 20);  
+        vrCamera.lookAt(0, 0, 0); 
+
+        renderer.render(scene, vrCamera);
     } else if (useFixedCamera) {
         stereoCamera.eyeSep = 0.064;
         stereoCamera.update(camera);
@@ -364,6 +369,7 @@ function render() {
         renderer.render(scene, fixedCamera);
     }
 }
+
 
 
 
@@ -494,9 +500,7 @@ function onKeyDown(e) {
             if (useFixedCamera) {
                 camera = fixedCamera;
             } else {
-                camera = renderer.xr.getCamera();
-                camera.position.set(0, 50, 60);
-                camera.lookAt(5, 5, 5);
+                camera = null; 
                 renderer.setScissorTest(false);
                 renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
             }
