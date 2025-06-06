@@ -40,7 +40,6 @@ const ovniLightMaterial = new THREE.MeshPhongMaterial({ color: 0xee4b2b });
 const ovniLightsColor = 0xee4b2b;
 let trees = [];
 
-
 /////////////////////
 /* CREATE SCENE(S) */
 /////////////////////
@@ -339,8 +338,7 @@ function update() {
 /////////////
 function render() {
     if (renderer.xr.isPresenting) {
-        const vrCamera = renderer.xr.getCamera();
-        renderer.render(scene, vrCamera);
+        renderer.render(scene, camera);
     } else if (useFixedCamera) {
         stereoCamera.eyeSep = 0.064;
         stereoCamera.update(camera);
@@ -386,9 +384,10 @@ function init() {
 /* ANIMATION CYCLE */
 /////////////////////
 function animate() {
-    requestAnimationFrame(animate);
-    update();
-    render();
+    renderer.setAnimationLoop(() => {
+        update();
+        render();
+    });
 }
 
 ////////////////////////////
