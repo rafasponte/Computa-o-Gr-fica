@@ -344,7 +344,7 @@ function render() {
         
         const vrCamera = renderer.xr.getCamera();
         vrCamera.position.set(0, 5, 20);  
-        vrCamera.lookAt(0, 0, 0); 
+        vrCamera.lookAt(10, 10, 10); 
 
         renderer.render(scene, vrCamera);
     } else if (useFixedCamera) {
