@@ -66,13 +66,12 @@ function createObjects() {
     createMap();
     createMoon();
     createSkyDome();
-    createHouse(0, 0, 0);
     trees.push(createTree(-35, 15, 30, Math.PI / 6, 2.5));
     trees.push(createTree(-20, 15, -10, Math.PI / 2, 4));
     trees.push(createTree(10, 15, 5, -(Math.PI / 3), 2));
     trees.push(createTree(25, 15, -20, 0, 5));
     trees.push(createTree(40, 15, 20, -(Math.PI / 2), 3));
-    createOvni(0, 25, 0);
+    createOvni(0, 25, 10);
 }
 function createMap() {
     floralTexture = generateFloralTexture();
@@ -102,7 +101,7 @@ function createMap() {
         scene.add(terrain);
 
         const terrainHeight = getHeightAt(0, 0, terrain);
-        createHouse(0, terrainHeight + houseHeight / 2, 0);
+        createHouse(0, terrainHeight + houseHeight / 2, 10);
     });
 }
 
@@ -342,11 +341,7 @@ function update() {
 function render() {
     if (renderer.xr.isPresenting) {
         
-        const vrCamera = renderer.xr.getCamera();
-        vrCamera.position.set(0, 5, 20);  
-        vrCamera.lookAt(10, 10, 10); 
-
-        renderer.render(scene, vrCamera);
+        renderer.render(scene, camera);
     } else if (useFixedCamera) {
         stereoCamera.eyeSep = 0.064;
         stereoCamera.update(camera);
@@ -369,11 +364,6 @@ function render() {
         renderer.render(scene, fixedCamera);
     }
 }
-
-
-
-
-
 
 ////////////////////////////////
 /* INITIALIZE ANIMATION CYCLE */
@@ -500,7 +490,6 @@ function onKeyDown(e) {
             if (useFixedCamera) {
                 camera = fixedCamera;
             } else {
-                camera = null; 
                 renderer.setScissorTest(false);
                 renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
             }
