@@ -30,6 +30,7 @@ let lightingEnabled = true;
 
 let stereoCamera = new THREE.StereoCamera();
 let useFixedCamera = false;
+let fixedCamera;
 
 const treeTrunkMaterial = new THREE.MeshPhongMaterial({ color: 0xCC7722 });
 const treeLeafMaterial = new THREE.MeshPhongMaterial({ color: 0x013220 });
@@ -51,9 +52,11 @@ function createScene() {
 /* CREATE CAMERA(S) */
 //////////////////////
 function createCamera() {
-    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 50, 60);
-    camera.lookAt(0, 0, 0);
+    fixedCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    fixedCamera.position.set(0, 50, 60);
+    fixedCamera.lookAt(0, 0, 0);
+
+    camera = fixedCamera;
 }
 
 ////////////////////////
@@ -338,8 +341,7 @@ function update() {
 /////////////
 function render() {
     if (renderer.xr.isPresenting) {
-        const vrCamera = renderer.xr.getCamera();
-        renderer.render(scene, vrCamera);
+        renderer.render(scene, camera);
     } else if (useFixedCamera) {
         stereoCamera.eyeSep = 0.064;
         stereoCamera.update(camera);
@@ -359,7 +361,7 @@ function render() {
 
         renderer.setScissorTest(false);
     } else {
-        renderer.render(scene, camera);
+        renderer.render(scene, fixedCamera);
     }
 }
 
@@ -490,11 +492,11 @@ function onKeyDown(e) {
             useFixedCamera = !useFixedCamera;
 
             if (useFixedCamera) {
-                camera.position.set(0, 50, 90);
-                camera.lookAt(10, 2, 10);
+                camera = fixedCamera;
             } else {
+                camera = renderer.xr.getCamera();
                 camera.position.set(0, 50, 60);
-                camera.lookAt(0, 0, 0);
+                camera.lookAt(5, 5, 5);
                 renderer.setScissorTest(false);
                 renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
             }
