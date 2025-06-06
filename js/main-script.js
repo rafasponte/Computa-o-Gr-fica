@@ -99,7 +99,7 @@ function createMap() {
         terrain = new THREE.Mesh(geometry, material);
         terrain.name = "terrain";
         scene.add(terrain);
-        terrain.y = -10;
+        terrain.y = -30;
 
         const terrainHeight = getHeightAt(0, 0, terrain);
         createHouse(0, terrainHeight + houseHeight / 2, 10);
