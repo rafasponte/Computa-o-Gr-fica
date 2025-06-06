@@ -71,7 +71,7 @@ function createObjects() {
     trees.push(createTree(10, 15, 5, -(Math.PI / 3), 2));
     trees.push(createTree(25, 15, -20, 0, 5));
     trees.push(createTree(40, 15, 20, -(Math.PI / 2), 3));
-    createOvni(0, 25, 10);
+    createOvni(0, 25, 0);
 }
 function createMap() {
     floralTexture = generateFloralTexture();
@@ -99,10 +99,9 @@ function createMap() {
         terrain = new THREE.Mesh(geometry, material);
         terrain.name = "terrain";
         scene.add(terrain);
-        terrain.y = -30;
 
         const terrainHeight = getHeightAt(0, 0, terrain);
-        createHouse(0, terrainHeight + houseHeight / 2, 10);
+        createHouse(0, terrainHeight + houseHeight / 2, 0);
     });
 }
 
