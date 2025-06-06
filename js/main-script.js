@@ -339,6 +339,7 @@ function update() {
 /////////////
 function render() {
     if (renderer.xr.isPresenting) {
+        const vrCamera = renderer.xr.getCamera();
         renderer.render(scene, camera);
     } else if (useFixedCamera) {
         stereoCamera.eyeSep = 0.064;
@@ -518,8 +519,8 @@ function onKeyUp(e) {
 function createRenderer() {
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
     renderer.xr.enabled = true;
+    document.body.appendChild(renderer.domElement);
     document.body.appendChild(VRButton.createButton(renderer));
 }
 
