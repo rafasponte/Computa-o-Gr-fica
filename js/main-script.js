@@ -340,7 +340,7 @@ function update() {
 function render() {
     if (renderer.xr.isPresenting) {
         const vrCamera = renderer.xr.getCamera();
-        renderer.render(scene, camera);
+        renderer.render(scene, vrCamera);
     } else if (useFixedCamera) {
         stereoCamera.eyeSep = 0.064;
         stereoCamera.update(camera);
